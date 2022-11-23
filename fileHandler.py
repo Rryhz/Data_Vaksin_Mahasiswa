@@ -70,6 +70,8 @@ def menu():
     if pilih == 1 :
         pilih1()
         menu()
+
+# Tampilkan Data Vaksin Mahasiswa
     elif pilih == 2 :
         os.system("cls")
         print("Data Vaksin Mahasiswa")
@@ -77,29 +79,28 @@ def menu():
         print("----------------------")
         input("Press Enter, Untuk Kembali Ke Menu Utama")
         menu()
+    
+# Isi Data Vaksin Mahasiswa
     elif pilih == 3 :
         readFileToList()
-        
-# Isi data baru
-        index_update = int(input("Masukkan pilihan index : "))-1
-        nama = input("Masukkan nama baru :")
-        nim = input("Masukkan nim baru :")
-        jurusan = input("Masukkan jurusan baru :")
-        angkatan = int(input("Masukkan angkatan baru :"))
-        data_vaksin = input("Masukkan data_vaksin baru :")
-        
-# Update data
+        index_update    = int(input("Masukkan pilihan index     :"))-1
+        nama            = input("Masukkan nama baru         :")
+        nim             = input("Masukkan nim baru          :")
+        jurusan         = input("Masukkan jurusan baru      :")
+        angkatan        = int(input("Masukkan angkatan baru     :"))
+        data_vaksin     = input("Masukkan data vaksin baru  :")
+        # Update data
         dataSiswa[index_update].setNama(nama)
         dataSiswa[index_update].setNim(nim)
         dataSiswa[index_update].setJurusan(jurusan)
         dataSiswa[index_update].setAngkatan(angkatan)
         dataSiswa[index_update].setDataVaksin(data_vaksin)
-# Hapus file txt
+        # Hapus file txt
         if os.path.exists(namaFile):
             os.remove(namaFile)
         else:
             print("The file does not exist")#add this to prevent errors
-# Write ke txt
+        # Write ke txt
         with open(namaFile, 'w') as filehandle:
             for objMahasiswa in dataSiswa:
                 teks = f"{objMahasiswa.getNama()};{objMahasiswa.getNim()};{objMahasiswa.getJurusan()};{objMahasiswa.getAngkatan()};{objMahasiswa.getDataVaksin()}\n"
@@ -108,6 +109,8 @@ def menu():
 
         input("Press Enter, Untuk Kembali Ke Menu Utama")
         menu()
+
+# Delete Data Siswa
     elif pilih == 4:
         readFileToList()
 
@@ -126,12 +129,15 @@ def menu():
                     filehandle.write(teks)
                 filehandle.close()
             print("Data berhasil dihapus")
-        
         menu()
+
+# Developer Program
     elif pilih == 5 :
         developer()
         input("\n\n Press Enter, Untuk Kembali Ke Menu Utama")
         menu()
+
+# Logout
     elif pilih == 6 :
         sys.exit()
 
@@ -147,18 +153,18 @@ def developer():
     print("Alfisyahrin Denzel Shaquille Beryl   | J0404221098")
     print("-----------------------------------------------------")
 
-# Inputan
+# Fungsi nput
 def pilih1():
     ulang = "Y"
     while ulang in("y", "Y"):
         os.system("cls")
         print("Input Data Vaksin Mahasiswa")
-        nama = input("Nama: ")
-        nim = input("NIM: ")
-        jurusan = input("Jurusan Sekolah: ")
-        angkatan = int(input("Angkatan: "))
-        dataVaksin = input("Data Vaksin: ")
-        mahasiswa = ListMahasiswa(nama, nim, jurusan, angkatan, dataVaksin)
+        nama        = input("Nama                   : ")
+        nim         = input("NIM                    : ")
+        jurusan     = input("Jurusan                : ")
+        angkatan    = int(input("Angkatan              : "))
+        dataVaksin  = input("Data Vaksin            : ")
+        mahasiswa   = ListMahasiswa(nama, nim, jurusan, angkatan, dataVaksin)
 
         file_bio = open("Data_Mahasiswa.txt", "a")
         teks = f"{mahasiswa.getNama()};{mahasiswa.getNim()};{mahasiswa.getJurusan()};{mahasiswa.getAngkatan()};{mahasiswa.getDataVaksin()}\n"
