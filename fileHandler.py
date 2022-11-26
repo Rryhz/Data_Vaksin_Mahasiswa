@@ -64,7 +64,7 @@ def menu():
 
     print("Data Vaksin Mahasiswa SV IPB UNIVERSITY")
     print("-------------------------------------------")
-    print("1. Input Data Vaksin Mahasiwa")
+    print("1. Input Data Vaksin Mahasiswa")
     print("2. Tampilkan Data Vaksin Mahasiswa")
     print("3. Update Data Vaksin Mahasiswa")
     print("4. Delete Data Vaksin Mahasiswa")
@@ -93,11 +93,11 @@ def menu():
         # check if object in list exist
         if (index_update < len(dataSiswa)):
         # Isi data baru
-            nama = input("Masukkan nama baru :")
-            nim = input("Masukkan nim baru :")
-            jurusan = input("Masukkan jurusan baru :")
-            angkatan = int(input("Masukkan angkatan baru :"))
-            data_vaksin = input("Masukkan data_vaksin baru :")
+            nama        = input("Masukkan nama baru         :")
+            nim         = input("Masukkan nim baru          :")
+            jurusan     = input("Masukkan jurusan baru      :")
+            angkatan    = int(input("Masukkan angkatan baru    :"))
+            data_vaksin = input("Masukkan data_vaksin baru  :")
         
             # Update data
             dataSiswa[index_update].setNama(nama)
@@ -170,12 +170,12 @@ def pilih1():
     while ulang in("y", "Y"):
         os.system("cls")
         print("Input Data Vaksin Mahasiswa")
-        nama = input("Nama: ")
-        nim = input("NIM: ")
-        jurusan = input("Jurusan Sekolah: ")
-        angkatan = int(input("Angkatan: "))
-        dataVaksin = input("Data Vaksin: ")
-        mahasiswa = ListMahasiswa(nama, nim, jurusan, angkatan, dataVaksin)
+        nama        = input("Nama               : ")
+        nim         = input("NIM                : ")
+        jurusan     = input("Jurusan Sekolah    : ")
+        angkatan    = int(input("Angkatan           : "))
+        dataVaksin  = input("Data Vaksin        : ")
+        mahasiswa   = ListMahasiswa(nama, nim, jurusan, angkatan, dataVaksin)
 
         file_bio = open("Data_Mahasiswa.txt", "a")
         teks = f"{mahasiswa.getNama()};{mahasiswa.getNim()};{mahasiswa.getJurusan()};{mahasiswa.getAngkatan()};{mahasiswa.getDataVaksin()}\n"
