@@ -31,29 +31,33 @@ class ListMahasiswa:
     def setJurusan(self, jurusan):
         self.jurusan = jurusan
     def setAngkatan(self, angkatan):
-        self.nim = angkatan
+        self.angkatan = angkatan
     def setDataVaksin(self, data_vaksin):
-        self.nim = data_vaksin
+        self.data_vaksin = data_vaksin
 
 def readFileToList():
      # read file to list
-    with open(namaFile, 'r') as file:
-        fileSiswa = file.readlines()
-        fileSiswa = [x.rstrip() for x in fileSiswa]
-        
-    print(12*'-')
+        # cek file data ada / tidak
+    if (os.path.exists(namaFile)):
+        with open(namaFile, 'r') as file:
+            fileSiswa = file.readlines()
+            fileSiswa = [x.rstrip() for x in fileSiswa]
 
-    if not dataSiswa :
-        for listSiswa in fileSiswa :
-            splitSiswa = listSiswa.split(';')
-            print(f"Nama\t\t{splitSiswa[0]}\nNim\t\t{splitSiswa[1]}\nJurusan\t\t{splitSiswa[2]}\nAngkatan\t{splitSiswa[3]}\nData Vaksin\t{splitSiswa[4]}\n")
-            mahasiswa = ListMahasiswa(splitSiswa[0], splitSiswa[1], splitSiswa[2], splitSiswa[3], splitSiswa[4])
-            dataSiswa.append(mahasiswa)
+        print(12*'-')
+
+        if not dataSiswa :
+            for listSiswa in fileSiswa :
+                splitSiswa = listSiswa.split(';')
+                print(f"Nama\t\t{splitSiswa[0]}\nNim\t\t{splitSiswa[1]}\nJurusan\t\t{splitSiswa[2]}\nAngkatan\t{splitSiswa[3]}\nData Vaksin\t{splitSiswa[4]}\n")
+                mahasiswa = ListMahasiswa(splitSiswa[0], splitSiswa[1], splitSiswa[2], splitSiswa[3], splitSiswa[4])
+                dataSiswa.append(mahasiswa)
+        else :
+            for listSiswa in fileSiswa :
+                splitSiswa = listSiswa.split(';')
+                print(f"Nama\t\t{splitSiswa[0]}\nNim\t\t{splitSiswa[1]}\nJurusan\t\t{splitSiswa[2]}\nAngkatan\t{splitSiswa[3]}\nData Vaksin\t{splitSiswa[4]}\n")
     else :
-        for listSiswa in fileSiswa :
-            splitSiswa = listSiswa.split(';')
-            print(f"Nama\t\t{splitSiswa[0]}\nNim\t\t{splitSiswa[1]}\nJurusan\t\t{splitSiswa[2]}\nAngkatan\t{splitSiswa[3]}\nData Vaksin\t{splitSiswa[4]}\n")
-
+        print("Data tidak ditemukan, mohon input data terlebih dahulu")
+        menu()
 # Menu
 def menu():
     os.system("cls")
@@ -67,6 +71,8 @@ def menu():
     print("5. Informasi Pengembang")
     print("6. Log Out")
     pilih = int(input("Masukkan Pilihan Anda : ")+' ')
+
+# Input Data Vaksin Siswa
     if pilih == 1 :
         pilih1()
         menu()
@@ -79,43 +85,49 @@ def menu():
         print("----------------------")
         input("Press Enter, Untuk Kembali Ke Menu Utama")
         menu()
-    
-# Isi Data Vaksin Mahasiswa
+
+# Update Data Vaksin Mahasiswa
     elif pilih == 3 :
         readFileToList()
-        index_update    = int(input("Masukkan pilihan index     :"))-1
-        nama            = input("Masukkan nama baru         :")
-        nim             = input("Masukkan nim baru          :")
-        jurusan         = input("Masukkan jurusan baru      :")
-        angkatan        = int(input("Masukkan angkatan baru     :"))
-        data_vaksin     = input("Masukkan data vaksin baru  :")
-        # Update data
-        dataSiswa[index_update].setNama(nama)
-        dataSiswa[index_update].setNim(nim)
-        dataSiswa[index_update].setJurusan(jurusan)
-        dataSiswa[index_update].setAngkatan(angkatan)
-        dataSiswa[index_update].setDataVaksin(data_vaksin)
-        # Hapus file txt
-        if os.path.exists(namaFile):
-            os.remove(namaFile)
-        else:
-            print("The file does not exist")#add this to prevent errors
-        # Write ke txt
-        with open(namaFile, 'w') as filehandle:
-            for objMahasiswa in dataSiswa:
-                teks = f"{objMahasiswa.getNama()};{objMahasiswa.getNim()};{objMahasiswa.getJurusan()};{objMahasiswa.getAngkatan()};{objMahasiswa.getDataVaksin()}\n"
-                filehandle.write(teks)
-            filehandle.close()
-
+        index_update = int(input("Masukkan pilihan index : "))-1
+        # check if object in list exist
+        if (index_update < len(dataSiswa)):
+        # Isi data baru
+            nama = input("Masukkan nama baru :")
+            nim = input("Masukkan nim baru :")
+            jurusan = input("Masukkan jurusan baru :")
+            angkatan = int(input("Masukkan angkatan baru :"))
+            data_vaksin = input("Masukkan data_vaksin baru :")
+        
+            # Update data
+            dataSiswa[index_update].setNama(nama)
+            dataSiswa[index_update].setNim(nim)
+            dataSiswa[index_update].setJurusan(jurusan)
+            dataSiswa[index_update].setAngkatan(angkatan)
+            dataSiswa[index_update].setDataVaksin(data_vaksin)
+            # Hapus file txt
+            if os.path.exists(namaFile):
+                os.remove(namaFile)
+            else:
+                print("The file does not exist")#add this to prevent errors
+            # Write ke txt
+            with open(namaFile, 'w') as filehandle:
+                for objMahasiswa in dataSiswa:
+                    teks = f"{objMahasiswa.getNama()};{objMahasiswa.getNim()};{objMahasiswa.getJurusan()};{objMahasiswa.getAngkatan()};{objMahasiswa.getDataVaksin()}\n"
+                    filehandle.write(teks)
+                filehandle.close()
+        else :
+            print ("Data tidak ditemukan")
         input("Press Enter, Untuk Kembali Ke Menu Utama")
         menu()
 
-# Delete Data Siswa
+#Delete Data Vaksin Mahasiswa 
     elif pilih == 4:
         readFileToList()
-
         index_delete = int(input("Masukkan index yang akan dihapus : "))-1
-        if (dataSiswa[index_delete]):
+        # check if object exist in list
+        if (index_delete < len(dataSiswa)):
+            # del untuk delete object di list
             del dataSiswa[index_delete]
             # delete txt
             if os.path.exists(namaFile):
@@ -129,19 +141,18 @@ def menu():
                     filehandle.write(teks)
                 filehandle.close()
             print("Data berhasil dihapus")
+        else :
+            print("Data tidak ditemukan")
+        input("\n\n Press Enter, Untuk Kembali Ke Menu Utama")
         menu()
-
-# Developer Program
     elif pilih == 5 :
         developer()
         input("\n\n Press Enter, Untuk Kembali Ke Menu Utama")
         menu()
-
-# Logout
     elif pilih == 6 :
         sys.exit()
 
-# Developer
+# Fungsi Developer
 def developer():
     os.system("cls")
     print("SV IPB UNIVERSITY | Teknologi Rekayasa Komputer 59 B1")
@@ -153,18 +164,18 @@ def developer():
     print("Alfisyahrin Denzel Shaquille Beryl   | J0404221098")
     print("-----------------------------------------------------")
 
-# Fungsi nput
+# Fungsi Inputan
 def pilih1():
     ulang = "Y"
     while ulang in("y", "Y"):
         os.system("cls")
         print("Input Data Vaksin Mahasiswa")
-        nama        = input("Nama                   : ")
-        nim         = input("NIM                    : ")
-        jurusan     = input("Jurusan                : ")
-        angkatan    = int(input("Angkatan              : "))
-        dataVaksin  = input("Data Vaksin            : ")
-        mahasiswa   = ListMahasiswa(nama, nim, jurusan, angkatan, dataVaksin)
+        nama = input("Nama: ")
+        nim = input("NIM: ")
+        jurusan = input("Jurusan Sekolah: ")
+        angkatan = int(input("Angkatan: "))
+        dataVaksin = input("Data Vaksin: ")
+        mahasiswa = ListMahasiswa(nama, nim, jurusan, angkatan, dataVaksin)
 
         file_bio = open("Data_Mahasiswa.txt", "a")
         teks = f"{mahasiswa.getNama()};{mahasiswa.getNim()};{mahasiswa.getJurusan()};{mahasiswa.getAngkatan()};{mahasiswa.getDataVaksin()}\n"
